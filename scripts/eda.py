@@ -1,9 +1,12 @@
 import matplotlib.pyplot as plt
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+import pandas as pd
 
 # Exploratory Data Analysis
 def explore_data(df):
+  df.set_index('Date', inplace=True)
+  
   print("Data Summary:\n", df.describe())
   print("Missing Values:\n", df.isnull().sum())
   
@@ -13,6 +16,7 @@ def explore_data(df):
   plt.xlabel("Date")
   plt.ylabel("Price")
   plt.legend()
+  plt.gcf().autofmt_xdate()  # Auto-format the x-axis dates
   plt.show()
 # Stationarity Check
 def check_stationarity(df):

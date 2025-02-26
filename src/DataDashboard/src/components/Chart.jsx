@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import React, { useEffect, useState } from 'react';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 const Chart = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("/api/data")
+    fetch("http://localhost:5000/api/data")
       .then((res) => res.json())
       .then((data) => {
         const formattedData = data.dates.map((date, index) => ({

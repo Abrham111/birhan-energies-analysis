@@ -97,7 +97,6 @@ Frontend runs at: **`(http://localhost:5173/)`**
  **Summary Section**: Shows **latest oil price, max/min prices**
  **Charts**:
    - **Line Chart**: Historical Brent oil price trend
-   - **Volatility Chart**: Forecasted volatility from GARCH
 
 ---
 

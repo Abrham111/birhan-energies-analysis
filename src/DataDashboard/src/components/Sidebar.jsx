@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from "react";
 import { FiBarChart2, FiDollarSign, FiMenu } from "react-icons/fi";
+import { FaHome } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 
 const Sidebar = ({ setActiveSection }) => {
@@ -12,6 +13,11 @@ const Sidebar = ({ setActiveSection }) => {
         <FiMenu />
       </button>
       <ul>
+      <li className="flex items-center space-x-2 p-3 cursor-pointer hover:bg-gray-700 rounded-lg">
+          <Link to="/" className="flex items-center space-x-2" onClick={() => setActiveSection("home")}>
+          <FaHome /> {isOpen && <span>Home</span>}
+          </Link>
+        </li>
         <li className="flex items-center space-x-2 p-3 cursor-pointer hover:bg-gray-700 rounded-lg">
           <Link to="/summary" className="flex items-center space-x-2" onClick={() => setActiveSection("summary")}>
             <FiDollarSign /> {isOpen && <span>Summary</span>}

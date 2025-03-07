@@ -1,20 +1,21 @@
 from arch import arch_model
+import numpy as np
 import matplotlib.pyplot as plt
 
 def train_garch(df):
-  # Fit GARCH(1,1) model
-  model = arch_model(df['price'], vol='Garch', p=1, q=1)
-  fitted_model = model.fit()
-  print(fitted_model.summary())
+  # Rescale the Return values
+  df['Return'] = df['Return'] * 100
 
-  # Forecast volatility
-  forecast = fitted_model.forecast(start=df.index[-30:])
-  
-  # Plot actual prices and predicted volatility
+  # Fit GARCH Model
+  garch_model = arch_model(df['Return'].dropna(), vol='Garch', p=1, q=1)
+  garch_fitted = garch_model.fit(disp='off')
+
+  # Forecast Volatility
+  forecast = garch_fitted.forecast(horizon=30)
   plt.figure(figsize=(12, 6))
-  plt.plot(df.index, df['price'], label="Brent Oil Price", color='blue')
-  plt.plot(forecast.variance[-30:], label="Predicted Volatility", linestyle="dashed", color='red')
+  plt.plot(df['Date'].iloc[-100:], df['Return'].iloc[-100:], label='Returns')
+  plt.plot(df['Date'].iloc[-30:], np.sqrt(forecast.variance.values[-1, :]), label='Volatility Forecast', color='red')
+  plt.title("Volatility Forecast using GARCH")
   plt.legend()
-  plt.title("GARCH Volatility Forecast for Brent Oil Prices")
   plt.show()
 

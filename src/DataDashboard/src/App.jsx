@@ -5,6 +5,7 @@ import Sidebar from './components/Sidebar';
 import Info from './components/Info';
 import Summary from './components/Summary';
 import Chart from './components/Chart';
+import CorrelationHeatmap from './components/CorrelationHeatmap';
 import './App.css';
 
 const App = () => {
@@ -13,7 +14,7 @@ const App = () => {
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    if (location.pathname === '/summary' || location.pathname === '/chart') {
+    if (location.pathname === '/summary' || location.pathname === '/chart' || location.pathname === '/heatmap') {
       setShowInfo(false);
     } else {
       setShowInfo(true);
@@ -31,6 +32,7 @@ const App = () => {
             <Routes>
               <Route path="/summary" element={<Summary />} />
               <Route path="/chart" element={<Chart />} />
+              <Route path="/heatmap" element={<CorrelationHeatmap />} />
             </Routes>
           </div>
         </div>

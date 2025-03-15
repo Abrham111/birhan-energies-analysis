@@ -10,6 +10,10 @@ df = pd.read_csv('../../data/BrentOilPrices.csv')
 df['Date'] = pd.to_datetime(df['Date'])
 df = df.sort_values('Date')
 
+@app.route('/')
+def welcome():
+    return "Server running"
+
 @app.route('/api/data')
 def get_data():
    return jsonify({
@@ -25,6 +29,24 @@ def get_summary():
         'avg_price': df['Price'].mean(),
         'latest_price': df.iloc[-1]['Price']
     })
+
+# Load commodity prices
+commodity_df = pd.read_csv("../../data/commodity_prices.csv", parse_dates=["Date"])
+
+# Merge datasets on Date
+df = pd.merge(df, commodity_df, on="Date", how="inner")
+
+# Compute full correlation matrix
+correlation_matrix = df.corr()
+
+@app.route("/api/correlation")
+def get_correlation():
+    return jsonify(correlation_matrix.to_dict())  # Return full matrix as JSON
+
+@app.route("/api/predictions")
+def get_predictions():
+    df = pd.read_csv("../../data/lstm_predictions.csv")
+    return jsonify(df.to_dict(orient="records"))
 
 if __name__ == '__main__':
     app.run(debug=True)
